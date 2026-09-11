@@ -1,0 +1,21 @@
+{
+  "name": "jansetu",
+  "version": "1.0.0",
+  "description": "JanSetu — AI Agent for Government Scheme Discovery & RTI Filing with Voice STT/TTS",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "start": "node backend/server.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "jansetu",
+    "schemes",
+    "rti",
+    "farmers",
+    "india"
+  ],
+  "author": "JanSetu Team",
+  "license": "MIT"
+}
