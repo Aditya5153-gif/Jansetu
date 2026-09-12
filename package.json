@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "JanSetu — AI Agent for Government Scheme Discovery & RTI Filing with Voice STT/TTS",
   "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "install:all": "cd backend && npm install && cd ../frontend && npm install",
