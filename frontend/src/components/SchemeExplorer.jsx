@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Layers, Building, IndianRupee, FileText, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
 import SchemeCard from './SchemeCard';
+import { API_BASE_URL } from '../apiConfig';
 
 const CATEGORIES = [
   { id: 'All', name_hi: 'सभी योजनाएं', name_en: 'All Schemes' },
@@ -46,7 +47,7 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
     if (selectedState !== 'All') params.append('state', selectedState);
     if (searchTerm.trim()) params.append('search', searchTerm.trim());
 
-    fetch(`/api/schemes?${params.toString()}`)
+    fetch(`${API_BASE_URL}/api/schemes?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         setSchemes(data.schemes || []);

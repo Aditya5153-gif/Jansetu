@@ -15,6 +15,7 @@ import {
   FileCode,
   X
 } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 const SAMPLE_REFS = [
   { ref: 'UP/PWD/2026/85096', title_hi: 'वाराणसी सड़क मरम्मत (PWD)' },
@@ -44,7 +45,7 @@ export default function RTITrackerStudio({
     setLoading(true);
     setError(null);
 
-    fetch(`/api/rti/track?refNo=${encodeURIComponent(ref.trim())}`)
+    fetch(`${API_BASE_URL}/api/rti/track?refNo=${encodeURIComponent(ref.trim())}`)
       .then(res => {
         if (!res.ok) throw new Error('Reference number not found');
         return res.json();
@@ -71,7 +72,7 @@ export default function RTITrackerStudio({
 
   const handleGenerateAppeal = () => {
     setGeneratingAppeal(true);
-    fetch('/api/rti/first-appeal', {
+    fetch(`${API_BASE_URL}/api/rti/first-appeal`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

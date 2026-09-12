@@ -32,6 +32,7 @@ import SchemeExplorer from './components/SchemeExplorer';
 import RTITrackerStudio from './components/RTITrackerStudio';
 import HelplineDirectory from './components/HelplineDirectory';
 import CivicFeaturesGuide from './components/CivicFeaturesGuide';
+import { API_BASE_URL } from './apiConfig';
 
 const QUICK_SEARCH_TAGS = [
   { label_hi: '🌾 PM-KISAN किस्त', label_en: '🌾 PM-KISAN Benefit', query: 'PM-KISAN किस्त और बैंक खाता समस्या' },
@@ -69,7 +70,7 @@ export default function App() {
 
   // Check Backend Health on Mount
   useEffect(() => {
-    fetch('/api/health')
+    fetch(`${API_BASE_URL}/api/health`)
       .then(res => res.json())
       .then(data => setBackendHealth(data))
       .catch(err => console.warn('Backend check:', err.message));
@@ -92,7 +93,7 @@ export default function App() {
     const activeProfile = profileOverride || userProfile;
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

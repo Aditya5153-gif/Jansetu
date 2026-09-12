@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, Phone, Clock, ShieldCheck, MapPin, FileText, CheckCircle2, AlertCircle, Building } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 export default function HelplineDirectory({ language = 'hi' }) {
   const isHindi = language === 'hi';
@@ -7,7 +8,7 @@ export default function HelplineDirectory({ language = 'hi' }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/helplines')
+    fetch(`${API_BASE_URL}/api/helplines`)
       .then(res => res.json())
       .then(data => {
         setHelplines(data);
