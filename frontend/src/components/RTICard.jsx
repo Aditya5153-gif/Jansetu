@@ -18,7 +18,7 @@ export default function RTICard({ rti, language = 'hi' }) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-stone-700 relative overflow-hidden">
+    <div className="bg-shield-gradient text-white rounded-2xl p-5 sm:p-6 shadow-lg border border-emerald-900/40 relative overflow-hidden">
       {/* Background seal watermarked */}
       <div className="absolute -right-8 -bottom-8 opacity-10 pointer-events-none text-white">
         <Scale className="w-56 h-56" />
@@ -27,11 +27,11 @@ export default function RTICard({ rti, language = 'hi' }) {
       {/* Header Tag */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <div className="flex items-center gap-2">
-          <span className="p-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-lg flex items-center justify-center">
+          <span className="p-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg flex items-center justify-center">
             <Scale className="w-5 h-5" />
           </span>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
               {isHindi ? 'कानूनी कार्रवाई पूर्ण' : 'Action Taken — RTI Filed'}
             </span>
             <h3 className="text-lg font-bold text-white">
@@ -40,7 +40,7 @@ export default function RTICard({ rti, language = 'hi' }) {
           </div>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-200 border border-emerald-500/40">
           <CheckCircle2 className="w-3.5 h-3.5" />
           <span>{rti.portal || 'rtionline.gov.in'}</span>
         </span>
@@ -49,44 +49,44 @@ export default function RTICard({ rti, language = 'hi' }) {
       {/* Primary Details Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* Department & PIO */}
-        <div className="bg-stone-800/80 border border-stone-700 rounded-xl p-3.5">
-          <span className="text-xs text-stone-400 block mb-1 font-medium">
+        <div className="bg-black/30 backdrop-blur-xs border border-white/15 rounded-xl p-3.5">
+          <span className="text-xs text-stone-300 block mb-1 font-medium">
             {isHindi ? 'लक्षित सरकारी विभाग (Department):' : 'Government Department:'}
           </span>
-          <p className="text-sm sm:text-base font-bold text-stone-100 mb-2">
+          <p className="text-sm sm:text-base font-bold text-white mb-2">
             {department}
           </p>
 
-          <span className="text-xs text-stone-400 block mb-1 font-medium">
+          <span className="text-xs text-stone-300 block mb-1 font-medium">
             {isHindi ? 'जिम्मेदार जन सूचना अधिकारी (PIO):' : 'Designated PIO Officer:'}
           </span>
-          <p className="text-xs sm:text-sm font-semibold text-stone-300">
+          <p className="text-xs sm:text-sm font-semibold text-emerald-200">
             {pio}
           </p>
         </div>
 
         {/* Reference Number & Statutory Deadline */}
-        <div className="bg-stone-800/80 border border-stone-700 rounded-xl p-3.5 flex flex-col justify-between">
+        <div className="bg-black/30 backdrop-blur-xs border border-white/15 rounded-xl p-3.5 flex flex-col justify-between">
           <div>
-            <span className="text-xs text-stone-400 block mb-1 font-medium">
+            <span className="text-xs text-stone-300 block mb-1 font-medium">
               {isHindi ? 'आधिकारिक संदर्भ संख्या (Reference No):' : 'Official Reference Number:'}
             </span>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-base sm:text-lg font-extrabold text-amber-400 bg-stone-900/90 px-3 py-1 rounded-lg border border-amber-500/30 tracking-wider">
+              <span className="font-mono text-base sm:text-lg font-extrabold text-amber-300 bg-black/50 px-3 py-1 rounded-lg border border-amber-400/40 tracking-wider">
                 {rti.referenceNumber}
               </span>
               <button
                 onClick={handleCopyRef}
-                className="p-1.5 rounded-lg bg-stone-700 hover:bg-stone-600 text-stone-200 transition-colors"
+                className="p-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white transition-colors cursor-pointer"
                 title="Copy Reference Number"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          <div className="mt-3 pt-3 border-t border-stone-700/60 flex items-center gap-2 text-rose-300 text-xs sm:text-sm">
-            <Clock className="w-4 h-4 flex-shrink-0 text-rose-400" />
+          <div className="mt-3 pt-3 border-t border-white/15 flex items-center gap-2 text-amber-200 text-xs sm:text-sm">
+            <Clock className="w-4 h-4 flex-shrink-0 text-amber-300" />
             <span>
               <strong>{isHindi ? 'जवाब की कानूनी अंतिम तिथि:' : 'Response Deadline (30 Days):'}</strong>{' '}
               {rti.deadlineDate}

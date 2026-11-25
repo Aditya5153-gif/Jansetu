@@ -115,10 +115,10 @@ export default function UserProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-xs">
-      <div className="bg-white border border-stone-200 rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md">
+      <div className="bg-slate-900 border border-white/15 rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white p-4 sm:p-5 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 text-white p-4 sm:p-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-white/20 rounded-xl">
               <User className="w-5 h-5 text-white" />
@@ -134,16 +134,16 @@ export default function UserProfileModal({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Quick Citizen Presets */}
-        <div className="bg-stone-50 border-b border-stone-200 p-3 sm:px-5">
-          <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-orange-600" />
+        <div className="bg-slate-950/80 border-b border-white/10 p-3 sm:px-5">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+            <Sparkles className="w-3 h-3 text-orange-400" />
             {isHindi ? '⚡ तुरंत प्रोफाइल लोड करें:' : '⚡ Quick Sample Citizen Profiles:'}
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -152,7 +152,7 @@ export default function UserProfileModal({
                 key={idx}
                 type="button"
                 onClick={() => handleApplyPreset(preset.profile)}
-                className="text-xs font-semibold bg-white hover:bg-orange-50 hover:text-orange-900 border border-stone-200 px-2.5 py-1 rounded-lg transition-colors text-stone-700 shadow-2xs"
+                className="text-xs font-semibold bg-slate-800 hover:bg-orange-500/20 hover:border-orange-500/40 hover:text-orange-300 border border-white/10 px-2.5 py-1 rounded-lg transition-colors text-slate-200 shadow-xs cursor-pointer"
               >
                 {preset.label}
               </button>
@@ -160,7 +160,7 @@ export default function UserProfileModal({
             <button
               type="button"
               onClick={handleReset}
-              className="text-xs font-semibold text-stone-500 hover:text-stone-700 bg-stone-200/70 px-2 py-1 rounded-lg"
+              className="text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 border border-white/5 px-2 py-1 rounded-lg cursor-pointer"
             >
               {isHindi ? 'साफ करें' : 'Clear'}
             </button>
@@ -171,7 +171,7 @@ export default function UserProfileModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto space-y-4 flex-1 text-xs sm:text-sm">
           {/* Full Name */}
           <div>
-            <label className="block font-bold text-stone-800 mb-1">
+            <label className="block font-bold text-slate-200 mb-1">
               {isHindi ? 'नागरिक का पूरा नाम (Full Name):' : 'Full Name:'}
             </label>
             <input
@@ -179,30 +179,30 @@ export default function UserProfileModal({
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
               placeholder={isHindi ? 'उदा. सीता देवी, राजेश कुमार, आदि...' : 'e.g. Sita Devi, Rajesh Kumar...'}
-              className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium"
+              className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium placeholder:text-slate-500"
             />
           </div>
 
           {/* State & District Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block font-bold text-stone-800 mb-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-orange-600" />
+              <label className="block font-bold text-slate-200 mb-1 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-orange-400" />
                 <span>{isHindi ? 'राज्य (State):' : 'State:'}</span>
               </label>
               <select
                 value={formData.state}
                 onChange={(e) => handleChange('state', e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium bg-white"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium"
               >
                 {INDIAN_STATES.map((st) => (
-                  <option key={st} value={st}>{st}</option>
+                  <option key={st} value={st} className="bg-slate-900 text-white">{st}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block font-bold text-stone-800 mb-1">
+              <label className="block font-bold text-slate-200 mb-1">
                 {isHindi ? 'जिला (District):' : 'District:'}
               </label>
               <input
@@ -210,7 +210,7 @@ export default function UserProfileModal({
                 value={formData.district}
                 onChange={(e) => handleChange('district', e.target.value)}
                 placeholder={isHindi ? 'उदा. वाराणसी, पटना, मुजफ्फरपुर...' : 'e.g. Varanasi, Patna, Indore...'}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -218,36 +218,36 @@ export default function UserProfileModal({
           {/* Occupation & Category Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block font-bold text-stone-800 mb-1 flex items-center gap-1">
-                <Briefcase className="w-3.5 h-3.5 text-orange-600" />
+              <label className="block font-bold text-slate-200 mb-1 flex items-center gap-1">
+                <Briefcase className="w-3.5 h-3.5 text-orange-400" />
                 <span>{isHindi ? 'व्यवसाय (Occupation):' : 'Occupation:'}</span>
               </label>
               <select
                 value={formData.occupation}
                 onChange={(e) => handleChange('occupation', e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium bg-white"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium"
               >
-                <option value="farmer">{isHindi ? 'छोटा / सीमांत किसान (Farmer)' : 'Farmer'}</option>
-                <option value="agricultural labourer">{isHindi ? 'खेतिहर मजदूर (Farm Labourer)' : 'Agricultural Labourer'}</option>
-                <option value="daily wager">{isHindi ? 'दैनिक मजदूर (Daily Wage Worker)' : 'Daily Wage Worker'}</option>
-                <option value="small shopkeeper">{isHindi ? 'छोटा दुकानदार / कारीगर (Artisan / Shop)' : 'Small Shopkeeper'}</option>
-                <option value="unemployed">{isHindi ? 'बेरोजगार (Unemployed)' : 'Unemployed'}</option>
+                <option value="farmer" className="bg-slate-900 text-white">{isHindi ? 'छोटा / सीमांत किसान (Farmer)' : 'Farmer'}</option>
+                <option value="agricultural labourer" className="bg-slate-900 text-white">{isHindi ? 'खेतिहर मजदूर (Farm Labourer)' : 'Agricultural Labourer'}</option>
+                <option value="daily wager" className="bg-slate-900 text-white">{isHindi ? 'दैनिक मजदूर (Daily Wage Worker)' : 'Daily Wage Worker'}</option>
+                <option value="small shopkeeper" className="bg-slate-900 text-white">{isHindi ? 'छोटा दुकानदार / कारीगर (Artisan / Shop)' : 'Small Shopkeeper'}</option>
+                <option value="unemployed" className="bg-slate-900 text-white">{isHindi ? 'बेरोजगार (Unemployed)' : 'Unemployed'}</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-bold text-stone-800 mb-1">
+              <label className="block font-bold text-slate-200 mb-1">
                 {isHindi ? 'वर्ग / श्रेणी (Caste Category):' : 'Social Category:'}
               </label>
               <select
                 value={formData.caste}
                 onChange={(e) => handleChange('caste', e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium bg-white"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium"
               >
-                <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
-                <option value="SC">SC (अनुसूचित जाति)</option>
-                <option value="ST">ST (अनुसूचित जनजाति)</option>
-                <option value="General">General (सामान्य)</option>
+                <option value="OBC" className="bg-slate-900 text-white">OBC (अन्य पिछड़ा वर्ग)</option>
+                <option value="SC" className="bg-slate-900 text-white">SC (अनुसूचित जाति)</option>
+                <option value="ST" className="bg-slate-900 text-white">ST (अनुसूचित जनजाति)</option>
+                <option value="General" className="bg-slate-900 text-white">General (सामान्य)</option>
               </select>
             </div>
           </div>
@@ -255,8 +255,8 @@ export default function UserProfileModal({
           {/* Annual Income & Land Holding */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block font-bold text-stone-800 mb-1 flex items-center gap-1">
-                <IndianRupee className="w-3.5 h-3.5 text-emerald-600" />
+              <label className="block font-bold text-slate-200 mb-1 flex items-center gap-1">
+                <IndianRupee className="w-3.5 h-3.5 text-emerald-400" />
                 <span>{isHindi ? 'वार्षिक आय (Annual Income ₹):' : 'Annual Income (₹):'}</span>
               </label>
               <input
@@ -264,7 +264,7 @@ export default function UserProfileModal({
                 step="5000"
                 value={formData.income}
                 onChange={(e) => handleChange('income', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-bold"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-bold"
               />
               <div className="flex gap-1 mt-1 text-[10px]">
                 {[45000, 80000, 120000, 200000].map(val => (
@@ -272,7 +272,7 @@ export default function UserProfileModal({
                     key={val}
                     type="button"
                     onClick={() => handleChange('income', val)}
-                    className="px-1.5 py-0.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded"
+                    className="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded cursor-pointer"
                   >
                     ₹{(val/1000)}k
                   </button>
@@ -281,8 +281,8 @@ export default function UserProfileModal({
             </div>
 
             <div>
-              <label className="block font-bold text-stone-800 mb-1 flex items-center gap-1">
-                <Layers className="w-3.5 h-3.5 text-stone-600" />
+              <label className="block font-bold text-slate-200 mb-1 flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5 text-orange-400" />
                 <span>{isHindi ? 'जमीन (Acres):' : 'Land (Acres):'}</span>
               </label>
               <input
@@ -290,26 +290,26 @@ export default function UserProfileModal({
                 step="0.5"
                 value={formData.land_holding_acres}
                 onChange={(e) => handleChange('land_holding_acres', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-bold"
+                className="w-full px-3 py-2 bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-bold"
               />
-              <span className="text-[10px] text-stone-500 block mt-1">
+              <span className="text-[10px] text-slate-400 block mt-1">
                 {isHindi ? '0 का अर्थ भूमिहीन / मजदूर है' : '0 means landless labourer'}
               </span>
             </div>
           </div>
 
           {/* Footer Save Actions */}
-          <div className="pt-3 border-t border-stone-200 flex items-center justify-between gap-2">
+          <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold transition-colors"
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-semibold transition-colors cursor-pointer"
             >
               {isHindi ? 'रद्द करें' : 'Cancel'}
             </button>
             <button
               type="submit"
-              className="px-5 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold flex items-center gap-1.5 shadow-sm transition-colors"
+              className="px-5 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-bold flex items-center gap-1.5 shadow-md transition-colors cursor-pointer"
             >
               <Check className="w-4 h-4" />
               <span>{isHindi ? 'विवरण सहेजें (Save Profile)' : 'Save Profile'}</span>

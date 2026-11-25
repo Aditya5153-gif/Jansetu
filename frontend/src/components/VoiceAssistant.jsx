@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, Volume2, VolumeX, RotateCcw, Globe, AlertCircle } from 'lucide-react';
+import { Mic, MicOff, Volume2, VolumeX, RotateCcw, Globe, AlertCircle, ChevronRight, Send } from 'lucide-react';
 
 export default function VoiceAssistant({ 
   onTranscript, 
@@ -11,6 +11,7 @@ export default function VoiceAssistant({
 }) {
   const [isListening, setIsListening] = useState(false);
   const [liveTranscript, setLiveTranscript] = useState('');
+  const [typedInput, setTypedInput] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
   const [speechError, setSpeechError] = useState(null);
@@ -87,7 +88,6 @@ export default function VoiceAssistant({
         setLiveTranscript('');
       }
     } else {
-      // Cancel any ongoing speech when user starts talking
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         setIsSpeaking(false);
@@ -103,13 +103,15 @@ export default function VoiceAssistant({
   };
 
   const handleSendTranscript = () => {
-    if (liveTranscript.trim()) {
+    const textToSend = typedInput.trim() || liveTranscript.trim();
+    if (textToSend) {
       if (recognitionRef.current && isListening) {
         recognitionRef.current.stop();
         setIsListening(false);
       }
-      onTranscript(liveTranscript);
+      onTranscript(textToSend);
       setLiveTranscript('');
+      setTypedInput('');
     }
   };
 
@@ -119,10 +121,9 @@ export default function VoiceAssistant({
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = currentLanguage === 'hi' ? 'hi-IN' : 'en-IN';
-    utterance.rate = 0.95; // Slightly slower for clear rural understanding
+    utterance.rate = 0.95;
     utterance.pitch = 1.0;
 
-    // Pick best matching Hindi or Indian English voice if available
     const voices = window.speechSynthesis.getVoices();
     const matchingVoice = voices.find(v => 
       currentLanguage === 'hi' 
@@ -148,30 +149,32 @@ export default function VoiceAssistant({
   };
 
   return (
-    <div className="bg-white border-t border-stone-200 shadow-xl p-3 sm:p-4 rounded-t-2xl sm:rounded-2xl max-w-4xl mx-auto w-full">
+    <div className="bg-[#faedd9]/95 backdrop-blur-md border border-[#deb887] shadow-xl p-2.5 sm:p-3.5 rounded-t-3xl sm:rounded-3xl max-w-4xl mx-auto w-full text-[#2b1f17]">
       {/* Top Controls: Language Switcher and Audio State */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-stone-100 text-xs sm:text-sm text-stone-600">
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#deb887]/80 text-xs text-[#5c4738]">
         <div className="flex items-center gap-2">
-          <Globe className="w-4 h-4 text-orange-600" />
-          <span className="font-semibold text-stone-800">
+          <Globe className="w-4 h-4 text-[#78350f]" />
+          <span className="font-bold text-[#26160c]">
             {currentLanguage === 'hi' ? 'भाषा:' : 'Language:'}
           </span>
           <button
+            type="button"
             onClick={() => onLanguageChange('hi')}
-            className={`px-2.5 py-1 rounded-full font-medium transition-all ${
+            className={`px-3 py-1 rounded-full font-bold text-xs transition-all cursor-pointer ${
               currentLanguage === 'hi'
-                ? 'bg-orange-600 text-white shadow-sm'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                ? 'bg-[#5c2314] text-white shadow-xs'
+                : 'border border-[#d8b992] text-[#4a3525] bg-[#fff8f0] hover:bg-[#faedd9]'
             }`}
           >
             हिंदी (Hindi)
           </button>
           <button
+            type="button"
             onClick={() => onLanguageChange('en')}
-            className={`px-2.5 py-1 rounded-full font-medium transition-all ${
+            className={`px-3 py-1 rounded-full font-bold text-xs transition-all cursor-pointer ${
               currentLanguage === 'en'
-                ? 'bg-orange-600 text-white shadow-sm'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                ? 'bg-[#5c2314] text-white shadow-xs'
+                : 'border border-[#d8b992] text-[#4a3525] bg-[#fff8f0] hover:bg-[#faedd9]'
             }`}
           >
             English
@@ -183,20 +186,20 @@ export default function VoiceAssistant({
           {isSpeaking && (
             <button
               onClick={stopSpeaking}
-              className="flex items-center gap-1 text-red-600 hover:text-red-700 bg-red-50 px-2 py-1 rounded text-xs font-semibold animate-pulse"
+              className="flex items-center gap-1 text-red-700 hover:text-red-800 bg-red-100/80 border border-red-300 px-2 py-0.5 rounded-full text-xs font-bold animate-pulse cursor-pointer"
               title="Stop audio playback"
             >
-              <VolumeX className="w-4 h-4" />
-              <span>{currentLanguage === 'hi' ? 'आवाज़ रोकें' : 'Stop Audio'}</span>
+              <VolumeX className="w-3.5 h-3.5" />
+              <span>{currentLanguage === 'hi' ? 'रोकें' : 'Stop'}</span>
             </button>
           )}
           {!isSpeaking && spokenScript && (
             <button
               onClick={() => speakText(spokenScript)}
-              className="flex items-center gap-1 text-emerald-700 hover:text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded text-xs font-semibold"
+              className="flex items-center gap-1 text-[#15803d] hover:text-[#166534] bg-emerald-100/80 border border-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold cursor-pointer"
               title="Repeat audio readout"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-3 h-3" />
               <span>{currentLanguage === 'hi' ? 'दोबारा सुनें' : 'Listen Again'}</span>
             </button>
           )}
@@ -205,76 +208,69 @@ export default function VoiceAssistant({
 
       {/* Error Alert */}
       {speechError && (
-        <div className="mb-3 p-2.5 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-2 text-amber-800 text-xs sm:text-sm">
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+        <div className="mb-2 p-2 bg-amber-50 border border-amber-300 rounded-xl flex items-center gap-2 text-amber-900 text-xs">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-700" />
           <span>{speechError}</span>
         </div>
       )}
 
-      {/* Center Voice Action Area */}
-      <div className="flex flex-col sm:flex-row items-center gap-3">
-        {/* Large Accessible Microphone Button */}
+      {/* Center Voice Action Area (Walnut Round Mic + Pill Search Box + Walnut Round Arrow Button) */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        {/* Walnut Brown Round Mic Button */}
         <button
           type="button"
           onClick={toggleListening}
           disabled={isProcessing || !speechSupported}
-          className={`relative group flex items-center justify-center p-4 sm:p-5 rounded-full text-white font-bold transition-all shadow-md focus:outline-none focus:ring-4 focus:ring-orange-300 ${
+          className={`relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full text-white font-bold transition-all shadow-md focus:outline-none cursor-pointer flex-shrink-0 ${
             isListening
               ? 'bg-red-600 hover:bg-red-700 mic-recording ring-4 ring-red-400'
-              : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700'
+              : 'bg-[#5c2314] hover:bg-[#4a1c10] active:scale-95'
           } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
           aria-label={isListening ? 'Stop listening' : 'Start speaking'}
+          title={isListening ? 'रोकने के लिए क्लिक करें' : 'बोलने के लिए माइक दबाएं'}
         >
           {isListening ? (
-            <MicOff className="w-7 h-7 sm:w-8 sm:h-8" />
+            <MicOff className="w-6 h-6" />
           ) : (
-            <Mic className="w-7 h-7 sm:w-8 sm:h-8" />
+            <Mic className="w-6 h-6" />
           )}
         </button>
 
-        {/* Live Audio Feedback or Instructions */}
-        <div className="flex-1 w-full bg-stone-50 border border-stone-200 rounded-xl p-3 min-h-[58px] flex items-center justify-between">
+        {/* Input Bar */}
+        <div className="flex-1 flex items-center bg-[#fff8f0] border border-[#d8b992] rounded-full px-4 py-2 sm:py-2.5 focus-within:border-[#78350f] focus-within:ring-2 focus-within:ring-[#78350f]/20 transition-all">
           {isListening ? (
-            <div className="w-full">
-              <div className="flex items-center gap-2 text-xs font-semibold text-red-600 mb-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></span>
-                <span>{currentLanguage === 'hi' ? 'आपकी बात सुन रहे हैं...' : 'Listening to your voice...'}</span>
-              </div>
-              <p className="text-sm font-medium text-stone-800 italic">
-                {liveTranscript || (currentLanguage === 'hi' ? 'बोलिए: नाम, गाँव, समस्या या योजना...' : 'Speak: state, farming, road, ration, or scheme problem...')}
-              </p>
-            </div>
-          ) : liveTranscript ? (
-            <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-stone-800 font-medium">{liveTranscript}</p>
-              <button
-                onClick={handleSendTranscript}
-                className="ml-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-sm"
-              >
-                {currentLanguage === 'hi' ? 'पूछें (Send)' : 'Send'}
-              </button>
+            <div className="flex-1 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <span className="text-xs sm:text-sm font-medium text-[#26160c] truncate">
+                {liveTranscript || (currentLanguage === 'hi' ? 'आपकी बात सुन रहे हैं...' : 'Listening...')}
+              </span>
             </div>
           ) : (
-            <div className="text-stone-500 text-xs sm:text-sm">
-              <span className="font-semibold text-stone-700">
-                {currentLanguage === 'hi' ? 'माइक दबाकर बोलें:' : 'Tap the mic to speak:'}
-              </span>{' '}
-              {mode === 'SCHEME' ? (
+            <input
+              type="text"
+              value={typedInput}
+              onChange={(e) => setTypedInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendTranscript()}
+              placeholder={
                 currentLanguage === 'hi'
-                  ? '"मैं यूपी का किसान हूँ, 80 हजार आय है, कौन सी सरकारी योजनाएं मिलेंगी?"'
-                  : '"I am a farmer from UP, income ₹80,000, which schemes do I qualify for?"'
-              ) : mode === 'RTI' ? (
-                currentLanguage === 'hi'
-                  ? '"हमारे गाँव की सड़क 3 साल से नहीं बनी, PWD विभाग में RTI दर्ज करें"'
-                  : '"Our village road is broken for 3 years, file RTI with PWD"'
-              ) : (
-                currentLanguage === 'hi'
-                  ? '"मैं यूपी का किसान हूँ, 80 हजार आय है, हमारे गाँव की सड़क नहीं बनी"'
-                  : '"I am a farmer from UP, income ₹80,000, our village road is broken"'
-              )}
-            </div>
+                  ? 'यहाँ अपना सवाल टाइप करें... (जैसे: पेंशन योजना की जानकारी चाहिए)'
+                  : 'Type your question here... (e.g. need info about pension scheme)'
+              }
+              className="flex-1 bg-transparent text-xs sm:text-sm text-[#26160c] placeholder:text-[#8a7260] outline-none font-medium"
+            />
           )}
         </div>
+
+        {/* Walnut Brown Round Arrow Button */}
+        <button
+          type="button"
+          onClick={handleSendTranscript}
+          disabled={isProcessing || (!typedInput.trim() && !liveTranscript.trim())}
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#5c2314] hover:bg-[#4a1c10] text-white flex items-center justify-center transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex-shrink-0"
+          title={currentLanguage === 'hi' ? 'भेजें' : 'Submit'}
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );

@@ -96,7 +96,7 @@ export default function RTITrackerStudio({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 relative z-10">
       {/* Search Header */}
       <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-900 text-white rounded-2xl p-5 sm:p-7 border border-stone-700 shadow-xl relative overflow-hidden">
         <div className="max-w-2xl relative z-10">
@@ -128,7 +128,7 @@ export default function RTITrackerStudio({
             <button
               onClick={() => fetchTracking(refInput)}
               disabled={loading || !refInput.trim()}
-              className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+              className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 cursor-pointer"
             >
               <Search className="w-4 h-4" />
               <span>{isHindi ? 'स्थिति देखें' : 'Track Status'}</span>
@@ -142,7 +142,7 @@ export default function RTITrackerStudio({
               <button
                 key={s.ref}
                 onClick={() => { setRefInput(s.ref); fetchTracking(s.ref); }}
-                className="bg-stone-800 hover:bg-stone-700 text-stone-200 px-2.5 py-1 rounded-lg border border-stone-600 font-mono text-[11px] transition-colors"
+                className="bg-stone-800 hover:bg-stone-700 text-stone-200 px-2.5 py-1 rounded-lg border border-stone-600 font-mono text-[11px] transition-colors cursor-pointer"
               >
                 {s.ref}
               </button>
@@ -153,50 +153,50 @@ export default function RTITrackerStudio({
 
       {/* Error Message */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm">
+        <div className="p-4 bg-red-950/60 border border-red-500/30 text-red-200 rounded-xl text-sm">
           {error}
         </div>
       )}
 
       {/* Tracking Details View */}
       {trackingData && (
-        <div className="bg-white border border-stone-200 rounded-2xl p-5 sm:p-6 shadow-xs space-y-6">
+        <div className="upsc-glass-card border border-white/10 rounded-2xl p-5 sm:p-6 shadow-xl space-y-6 text-white">
           {/* Status Header Overview */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-200">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-mono text-lg sm:text-xl font-extrabold text-stone-900 bg-stone-100 px-3 py-1 rounded-lg border border-stone-200">
+                <span className="font-mono text-lg sm:text-xl font-extrabold text-white bg-slate-900 px-3 py-1 rounded-lg border border-white/10">
                   {trackingData.referenceNumber}
                 </span>
                 <button
                   onClick={() => handleCopy(trackingData.referenceNumber)}
-                  className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500"
+                  className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white cursor-pointer"
                   title="Copy Reference"
                 >
-                  {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
-              <p className="text-xs sm:text-sm text-stone-600">
+              <p className="text-xs sm:text-sm text-slate-300">
                 <strong>{isHindi ? 'विभाग:' : 'Department:'}</strong> {isHindi ? trackingData.department_hi : trackingData.department}
               </p>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-slate-400">
                 <strong>{isHindi ? 'जन सूचना अधिकारी:' : 'PIO:'}</strong> {trackingData.pioOfficer}
               </p>
             </div>
 
             {/* Countdown Badge */}
-            <div className="bg-amber-50 border border-amber-300 rounded-2xl p-3 sm:px-5 flex items-center gap-3">
-              <div className="p-2 bg-amber-500/20 text-amber-800 rounded-xl">
-                <Clock className="w-6 h-6 text-amber-700" />
+            <div className="bg-amber-950/40 border border-amber-500/30 rounded-2xl p-3 sm:px-5 flex items-center gap-3">
+              <div className="p-2 bg-amber-500/20 text-amber-300 rounded-xl">
+                <Clock className="w-6 h-6 text-amber-400" />
               </div>
               <div>
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-900 block">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-400 block">
                   {isHindi ? 'जवाब की समय-सीमा' : 'Statutory Countdown'}
                 </span>
-                <p className="text-base sm:text-lg font-black text-amber-950 leading-tight">
+                <p className="text-base sm:text-lg font-black text-amber-100 leading-tight">
                   {trackingData.daysRemaining} {isHindi ? 'दिन शेष' : 'Days Remaining'}
                 </p>
-                <span className="text-[11px] text-stone-500">
+                <span className="text-[11px] text-slate-400">
                   {isHindi ? 'अंतिम तिथि:' : 'Deadline:'} {trackingData.deadlineDate}
                 </span>
               </div>
@@ -205,12 +205,12 @@ export default function RTITrackerStudio({
 
           {/* Statutory Milestone Timeline */}
           <div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900 mb-4 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-orange-600" />
+            <h3 className="text-sm sm:text-base font-bold text-white mb-4 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-orange-400" />
               <span>{isHindi ? 'कानूनी प्रक्रिया के 4 चरण (Milestones):' : 'Statutory 4-Phase Progress Timeline:'}</span>
             </h3>
 
-            <div className="relative border-l-2 border-stone-200 ml-4 pl-6 space-y-6">
+            <div className="relative border-l-2 border-white/10 ml-4 pl-6 space-y-6">
               {trackingData.milestones.map((m) => {
                 const isComplete = m.status === 'COMPLETED';
                 const isCurrent = m.status === 'IN_PROGRESS';
@@ -223,8 +223,8 @@ export default function RTITrackerStudio({
                         isComplete
                           ? 'bg-emerald-600 text-white'
                           : isCurrent
-                          ? 'bg-orange-500 text-white ring-4 ring-orange-200 animate-pulse'
-                          : 'bg-stone-200 text-stone-500'
+                          ? 'bg-orange-500 text-white ring-4 ring-orange-500/20 animate-pulse'
+                          : 'bg-slate-800 text-slate-500'
                       }`}
                     >
                       {isComplete ? '✓' : m.step}
@@ -232,25 +232,25 @@ export default function RTITrackerStudio({
 
                     <div>
                       <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                        <h4 className="text-xs sm:text-sm font-bold text-stone-900">
+                        <h4 className="text-xs sm:text-sm font-bold text-white">
                           {m.title}
                         </h4>
-                        <span className="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded font-mono">
+                        <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-white/5">
                           {m.date}
                         </span>
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                             isComplete
-                              ? 'bg-emerald-100 text-emerald-800'
+                              ? 'bg-emerald-950/60 border border-emerald-500/30 text-emerald-300'
                               : isCurrent
-                              ? 'bg-orange-100 text-orange-800'
-                              : 'bg-stone-100 text-stone-500'
+                              ? 'bg-orange-950/60 border border-orange-500/30 text-orange-300'
+                              : 'bg-slate-800 text-slate-400'
                           }`}
                         >
                           {m.status}
                         </span>
                       </div>
-                      <p className="text-xs text-stone-600">{m.detail}</p>
+                      <p className="text-xs text-slate-300">{m.detail}</p>
                     </div>
                   </div>
                 );
@@ -259,12 +259,12 @@ export default function RTITrackerStudio({
           </div>
 
           {/* Section 19 First Appeal Callout & Action */}
-          <div className="bg-gradient-to-r from-stone-900 to-stone-850 text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-slate-950/70 border border-white/10 text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 block mb-1">
                 {isHindi ? 'धारा 19(1) प्रथम अपील कानूनी अधिकार' : 'Section 19(1) First Appeal Rights'}
               </span>
-              <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
                 {isHindi
                   ? 'यदि जन सूचना अधिकारी 30 दिनों में जानकारी न दे या अधूरी जानकारी दे, तो आप वरिष्ठ अपीलीय प्राधिकारी (FAA) के समक्ष प्रथम अपील कर सकते हैं। धारा 7(6) के तहत सभी दस्तावेज 100% मुफ्त मिलेंगे।'
                   : 'If the PIO fails to respond within 30 days, file a formal First Appeal. All certified documents must be supplied 100% free of cost under Section 7(6).'}
@@ -274,7 +274,7 @@ export default function RTITrackerStudio({
             <button
               onClick={handleGenerateAppeal}
               disabled={generatingAppeal}
-              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-stone-950 font-black rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-md disabled:opacity-50"
+              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-stone-950 font-black rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-md disabled:opacity-50 cursor-pointer"
             >
               <Scale className="w-4 h-4" />
               <span>{isHindi ? 'प्रथम अपील का कानूनी ड्राफ्ट बनाएं' : 'Generate Section 19 Appeal'}</span>

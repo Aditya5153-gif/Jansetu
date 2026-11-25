@@ -4,18 +4,78 @@
 
 :root {
   font-family: 'Plus Jakarta Sans', 'Mukta', system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+
+/* Warm Sand / Golden Parchment Canvas Background matching reference image */
+.jansetu-canvas-bg {
+  background-color: #edd5b3;
+  color: #2b1f17;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Soft ambient warm sun & paper texture glow */
+.jansetu-ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    radial-gradient(circle 800px at 50% -10%, rgba(217, 119, 6, 0.08), transparent 70%),
+    radial-gradient(circle 700px at 90% 30%, rgba(100, 41, 24, 0.06), transparent 65%),
+    radial-gradient(circle 600px at 10% 60%, rgba(16, 61, 97, 0.05), transparent 65%);
+}
+
+/* Prussian Blue Gradient for "How JanSetu Works" Cards */
+.bg-prussian-gradient {
+  background: linear-gradient(135deg, #134463 0%, #24587c 45%, #42789f 100%);
+  color: #ffffff;
+}
+
+/* Dual Forest Green to Walnut Gradient for RTI Shield Banner */
+.bg-shield-gradient {
+  background: linear-gradient(to right, #0e2f1e 0%, #153f28 35%, #4a2110 75%, #5e2a15 100%);
+  color: #ffffff;
+}
+
+/* Warm Parchment Elevated Card */
+.jansetu-parchment-card {
+  background: #f7e8d3;
+  border: 1px solid #deb887;
+  box-shadow: 0 4px 20px -2px rgba(110, 51, 9, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jansetu-parchment-card:hover {
+  border-color: #c99a63;
+  box-shadow: 0 8px 25px -4px rgba(110, 51, 9, 0.08);
+}
+
+/* Soft Light Elevated Card */
+.jansetu-light-card {
+  background: #fdf6ec;
+  border: 1px solid #deb887;
+  box-shadow: 0 4px 20px -2px rgba(110, 51, 9, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jansetu-light-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.08);
 }
 
 /* Custom glowing pulse for voice recording */
 @keyframes micPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 22px rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 18px rgba(220, 38, 38, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
   }
 }
 

@@ -60,20 +60,20 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
   }, [selectedCategory, selectedState, searchTerm]);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 relative z-10">
       {/* Search & Filter Header Banner */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 sm:p-6 shadow-xs">
+      <div className="upsc-glass-card rounded-2xl p-4 sm:p-6 text-white border border-white/10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="p-2 bg-orange-100 text-orange-700 rounded-xl">
+              <span className="p-2 bg-orange-500/20 text-orange-400 rounded-xl border border-orange-500/30">
                 <Layers className="w-5 h-5" />
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-stone-900">
+              <h2 className="text-xl sm:text-2xl font-black text-white">
                 {isHindi ? 'सरकारी योजना अन्वेषक (Scheme Explorer)' : 'Government Schemes Directory'}
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-stone-600">
+            <p className="text-xs sm:text-sm text-slate-400">
               {isHindi
                 ? 'भारत सरकार एवं राज्य सरकारों की 2,500+ कल्याणकारी योजनाओं की प्रमाणित डायरेक्टरी'
                 : 'Verified repository of Central and State government welfare schemes with direct benefit details'}
@@ -82,16 +82,16 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
 
           {/* State Filter Dropdown */}
           <div className="flex items-center gap-2 self-start md:self-auto">
-            <span className="text-xs font-bold text-stone-600 whitespace-nowrap">
+            <span className="text-xs font-bold text-slate-300 whitespace-nowrap">
               {isHindi ? 'राज्य चुनें:' : 'State:'}
             </span>
             <select
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="text-xs sm:text-sm font-semibold bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500 text-stone-900"
+              className="text-xs sm:text-sm font-semibold bg-slate-950 border border-white/15 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500 text-white cursor-pointer"
             >
               {STATES.map(s => (
-                <option key={s.id} value={s.id}>
+                <option key={s.id} value={s.id} className="bg-slate-900 text-white">
                   {isHindi ? s.label_hi : s.label_en}
                 </option>
               ))}
@@ -101,7 +101,7 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
 
         {/* Search Bar */}
         <div className="relative mb-4">
-          <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchTerm}
@@ -111,12 +111,12 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
                 ? 'योजना का नाम, नकद लाभ, या विषय खोजें (उदा. PM-KISAN, बोरिंग, आवास, खाद...)'
                 : 'Search scheme by keyword, benefit, or sector (e.g. PM-KISAN, solar pump, housing, pension...)'
             }
-            className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 font-medium placeholder:text-stone-400"
+            className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-slate-950 border border-white/15 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 text-white font-medium placeholder:text-slate-500"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-stone-400 hover:text-stone-600 bg-stone-200 px-2 py-0.5 rounded"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-white bg-slate-800 px-2 py-0.5 rounded cursor-pointer"
             >
               Clear
             </button>
@@ -129,10 +129,10 @@ export default function SchemeExplorer({ language = 'hi', userState = 'All' }) {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === cat.id
                   ? 'bg-orange-600 text-white shadow-xs'
-                  : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                  : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-white/5'
               }`}
             >
               {isHindi ? cat.name_hi : cat.name_en}
